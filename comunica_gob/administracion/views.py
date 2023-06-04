@@ -1,9 +1,10 @@
 from django.db import IntegrityError
-from django.shortcuts import redirect, render, HttpResponse
+from django.shortcuts import redirect, render, HttpResponse,  get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
+from .models import Personas
 from django.contrib.auth.decorators import login_required
 from .forms import LoginForm
 
@@ -14,8 +15,12 @@ def index(request):
 
 @login_required
 def home(request):
-    return render(request, 'home.html',{
-        'title': "Home"})
+    context ={}
+    persona = Personas.objects.get(usuario__pk=request.user.pk)
+    context['persona'] = persona
+    return render(request, 'home.html', context, {
+        'title': "Home"
+        })
 
 def signup(request):
     if request.method == 'GET':
