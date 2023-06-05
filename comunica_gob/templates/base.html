@@ -14,9 +14,17 @@
 </head>
 
 <body>
-  {% include 'navbar.html' %}
-  {% block content %}
-  {% endblock %}
+
+  <div class="wrapper">
+    {% include 'navbar.html' %}
+    <div class="content">
+        <!-- Contenido principal de tu página -->
+        {% block content %}{% endblock %}
+    </div>
+    {% include 'footer.html' %}
+</div>
+
+
 </body>
 
 </html>

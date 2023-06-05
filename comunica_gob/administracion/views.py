@@ -5,23 +5,58 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from .models import Personas
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import LoginForm
 
+def login_forbidden(user):
+    return not user.is_authenticated
+
 # Create your views here.
+@login_required
+@user_passes_test(login_forbidden, login_url='home')
 def index(request):
     return render(request, 'index.html',{
         'title': "Inicio"})
 
 @login_required
 def home(request):
-    context ={}
-    persona = Personas.objects.get(usuario__pk=request.user.pk)
-    context['persona'] = persona
-    return render(request, 'home.html', context, {
-        'title': "Home"
+    # context ={}
+    # persona = Personas.objects.get(usuario__pk=request.user.pk)
+    # context['persona'] = persona
+    return render(request, 'home.html',
+    #context, 
+        {
+        'title': "Reportes"
         })
 
+# @login_required
+# def reporte1(request):
+#     if request.POST["reporte"]:
+#         return render(request, 'reporte.html',{
+#             'title': "Crear Reporte"
+#         })
+#     if request.method == 'GET':
+#         return render(request, 'reporte.html',{
+#             'title':"Entro en else"
+#         })
+
+
+@login_required
+def reporte(request):
+    if request.method == 'POST':
+        reporte_value = request.POST.get("reporte", None)
+        if reporte_value:
+            return render(request, 'reporte.html', {
+                'title': "Crear Reporte"
+            })
+    elif request.method == 'GET':
+        return render(request, 'reporte.html', {
+            'title': "Entro en else"
+        })
+
+
+@login_required
+@user_passes_test(login_forbidden, login_url='home')
 def signup(request):
     if request.method == 'GET':
         return render(request, 'signup.html', {
