@@ -6,19 +6,19 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from .models import Personas
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .forms import LoginForm
+from .forms import LoginForm, SignupForm
 
 def login_forbidden(user):
     return not user.is_authenticated
 
 # Create your views here.
-@login_required
-@user_passes_test(login_forbidden, login_url='home')
+# @login_required
+# @user_passes_test(login_forbidden, 1='home')
 def index(request):
     return render(request, 'index.html',{
         'title': "Inicio"})
 
-@login_required
+#@login_required
 def home(request):
     # context ={}
     # persona = Personas.objects.get(usuario__pk=request.user.pk)
@@ -45,9 +45,25 @@ def home(request):
 def reporte(request):
     if request.method == 'POST':
         reporte_value = request.POST.get("reporte", None)
-        if reporte_value:
+        if reporte_value == 'reparacion':
             return render(request, 'reporte.html', {
-                'title': "Crear Reporte"
+                'title': "Crear reporte de reparacion de calles y aceras" ,                
+            })
+        elif reporte_value == 'recoleccion':
+            return render(request, 'reporte.html', {
+                'title': "Crear reporte de recolección de basura y residuos" 
+            })
+        elif reporte_value == 'mantenimiento':
+            return render(request, 'reporte.html', {
+                'title': "Crear reporte de mantenimiento de parques y alumbrado público" 
+            })
+        elif reporte_value == 'gestion':
+            return render(request, 'reporte.html', {
+                'title': "Crear reporte de gestión de emergencias a desastres naturales" 
+            })
+        else:
+            return render(request, 'reporte.html', {
+                'title': "reporte_value"
             })
     elif request.method == 'GET':
         return render(request, 'reporte.html', {
@@ -55,12 +71,12 @@ def reporte(request):
         })
 
 
-@login_required
-@user_passes_test(login_forbidden, login_url='home')
+# @login_required
+# @user_passes_test(login_forbidden, login_url='home')
 def signup(request):
     if request.method == 'GET':
         return render(request, 'signup.html', {
-            "form": UserCreationForm(),
+            "form": SignupForm(),
             'title': "Registrarse"
         })
     else:

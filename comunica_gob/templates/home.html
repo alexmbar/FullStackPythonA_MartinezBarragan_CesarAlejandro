@@ -25,12 +25,12 @@
 
   <form action="{% url 'reporte' %}" method="post" class="d-inline">
     {% csrf_token %}
-    <button type="submit" name="reporte" value="mantenimiento" class="btn btn-secondary btn-sm">Reparación de calles y aceras</button>
+    <button type="submit" name="reporte" value="mantenimiento" class="btn btn-secondary btn-sm">Mantenimiento de parques y alumbrado público</button>
   </form>
 
   <form action="{% url 'reporte' %}" method="post" class="d-inline">
     {% csrf_token %}
-    <button type="submit" name="reporte" value="gestion" class="btn btn-secondary btn-sm">Recolección de basura y residuos</button>
+    <button type="submit" name="reporte" value="gestion" class="btn btn-secondary btn-sm">Gestión de emergencias a desastres naturales</button>
   </form>
 
 
