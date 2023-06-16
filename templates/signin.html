@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid h-custom">
+  <div class="row d-flex justify-content-center align-items-center h-100">
+
+    <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+      {% if messages %}
+      <div id="messages" style="display: none;">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+          {{ message }}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <form action="{% url 'signin' %}" method="post" class="needs-validation">
+        {% csrf_token %}
+
+        <div class="divider d-flex align-items-center my-4">
+          <h2 class="text-center fw-bold mx-3 mb-0">{{ title }}</h2>
+        </div>
+
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form3Example3">Usuario</label>
+
+          {{ form.username }}
+
+        </div>
+
+        <!-- Password input -->
+        <div class="form-outline mb-3">
+          <label class="form-label" for="form3Example4">Contraseña</label>
+
+          {{ form.password }}
+
+        </div>
+        <div class="col-12 text-right"><small class="text-danger">{{ error }}</small></div>
+
+        <div class="d-flex justify-content-between align-items-center">
+          <!-- Checkbox >
+                  <div class="form-check mb-0">
+                    <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
+                    <label class="form-check-label" for="form2Example3">
+                      Remember me
+                    </label>
+                  </div-->
+          <a href="#!" class="text-body">¿Olvidó su contraseña?</a>
+        </div>
+
+        <div class="text-center text-lg-start mt-4 pt-2">
+          <button type="submit" class="btn btn-primary btn-lg bgcolor-secundario bordecolor-secundario"
+            style="padding-left: 2.5rem; padding-right: 2.5rem;">Entrar</button>
+
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
+<script>
+  {% if messages %}
+  document.addEventListener('DOMContentLoaded', function () {
+    var messageElements = document.querySelectorAll('#messages .alert');
+    messageElements.forEach(function (element) {
+      var message = element.textContent.trim();
+      var messageType = element.classList.contains('alert-success') ? 'success' : 'error';
+
+      Swal.fire({
+        title: messageType,
+        text: message,
+        icon: messageType,
+        confirmButtonColor: '#3085d6',
+        confirmButtonText: 'Aceptar'
+      });
+    });
+  });
+  {% endif %}
+</script>
+{% endblock %}
+
+{% endblock %}
