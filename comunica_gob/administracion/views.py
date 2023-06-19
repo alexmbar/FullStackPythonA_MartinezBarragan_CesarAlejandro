@@ -4,9 +4,9 @@ from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from .models import Personas
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .forms import LoginForm, SignupForm
+from .forms import SignupForm
+
 
 def login_forbidden(user):
     return not user.is_authenticated
@@ -71,37 +71,46 @@ def reporte(request):
         })
 
 
-# @login_required
-# @user_passes_test(login_forbidden, login_url='home')
 def signup(request):
+    form = SignupForm(request.POST)
+    user = None  # Asignar None al comienzo de la función
+
     if request.method == 'GET':
         return render(request, 'signup.html', {
-            "form": SignupForm(),
-            'title': "Registrarse"
+            "form": form,
+            'title': "Registrarse",
+            'messages': messages.get_messages(request),
         })
     else:
         if request.POST["password1"] == request.POST["password2"]:
             try:
-                user = User.objects.create_user(
-                    request.POST["username"], password=request.POST["password1"]
-                )
-                user.save()
-                login(request, user)
-                return redirect('home')
+                if form.is_valid():
+                    user = form.save()
+                if user is not None:  # Verificar si user se ha asignado correctamente
+                    login(request, user)
+                    return redirect('home')
+                else:
+                    messages.warning(request, 'Ha ocurrido un error al crear el usuario.')
+                    return render(request, 'signup.html', {
+                        "form": form,
+                        'title': "Registrarse",
+                        'messages': messages.get_messages(request),
+                    })
             except IntegrityError:
                 messages.warning(request, 'Usuario ya existe.')
                 return render(request, 'signup.html', {
-                    "form": UserCreationForm(),
-                    'title': "Registrarse"
-                    #"error": "Usuario ya existe."
+                    "form": form,
+                    'title': "Registrarse",
+                    'messages': messages.get_messages(request),
                 })
         else:
             messages.warning(request, 'Contraseña no coincide.')
             return render(request, 'signup.html', {
-                "form": UserCreationForm(),
-                'title': "Registrarse"
-                #"error": "Contraseña no coincide."
+                "form": form,
+                'title': "Registrarse",
+                'messages': messages.get_messages(request),
             })
+
 
 @login_required
 def signout(request):

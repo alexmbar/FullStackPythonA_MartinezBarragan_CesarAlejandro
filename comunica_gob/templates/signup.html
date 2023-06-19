@@ -1,74 +1,116 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+
 <div class="container-fluid h-custom">
+
+
+
+  {% if messages %}
+  <div id="messages" style="display: none;">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+      {{ message }}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
   <div class="row d-flex justify-content-center align-items-center h-100">
 
     <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-      {% if messages %}
-      <div id="messages" style="display: none;">
-        {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
-          {{ message }}
-        </div>
-        {% endfor %}
+      <div class="divider d-flex align-items-center my-4">
+        <h2 class="text-center fw-bold mx-3 mb-0">{{ title }}</h2>
       </div>
-      {% endif %}
-      <form action="{% url 'signup' %}" method="post" class="needs-validation">
-        <div class="divider d-flex align-items-center my-4">
-          <h2 class="text-center fw-bold mx-3 mb-0">{{ title }}</h2>
-        </div>
-        <!-- Email input -->
-        <div class="form-outline mb-4">
-          <label class="form-label" for="form3Example3">Usuario</label>
-
-          {{ form.username }}
-
-        </div>
-        <!-- Email input -->
-        <div class="form-outline mb-4">
-          <label class="form-label" for="form3Example3">Nombre</label>
-
-          {{ form.name }}
-
-        </div>
-
-        <!-- Email input -->
-        <div class="form-outline mb-4">
-          <label class="form-label" for="form3Example3">Apellidos</label>
-
-          {{ form.lastname }}
-
-        </div>
-
-        <!-- Password input -->
-        <div class="form-outline mb-3">
-          <label class="form-label" for="form3Example4">Contraseña</label>
-
-          {{ form.password1 }}
-
-        </div>
-
-        <!-- Password input -->
-        <div class="form-outline mb-3">
-          <label class="form-label" for="form3Example4">Contraseña</label>
-
-          {{ form.password2 }}
-
-        </div>
-
-        <!-- {{ form.as_p }} -->
-        {% csrf_token %}
-        <div class="text-center text-lg-start mt-4 pt-2">
-          <button type="submit" class="btn btn-primary btn-lg bgcolor-secundario bordecolor-secundario"
-            style="padding-left: 2.5rem; padding-right: 2.5rem;">Registrarse</button>
-        </div>
-      </form>
     </div>
 
   </div>
-</div>
 
+  <div class="row d-flex justify-content-center align-items-center h-100">
+
+    <div class="col-md-6">
+      <form action="{% url 'signup' %}" method="post" class="needs-validation">
+        <!-- Username input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form3Example3">Usuario</label>
+          {{ form.username }}
+        </div>
+        <!-- Name input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form3Example3">Nombre</label>
+          {{ form.nombre }}
+        </div>
+
+        <!-- Lastname input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form3Example3">Apellidos</label>
+          {{ form.apellidos }}
+        </div>
+
+        <!-- Password input -->
+        <div class="form-outline mb-3">
+          <label class="form-label" for="form3Example4">Contraseña</label>
+          {{ form.password1 }}
+        </div>
+
+        <!-- Password input -->
+        <div class="form-outline mb-3">
+          <label class="form-label" for="form3Example4">Confirmar contraseña</label>
+          {{ form.password2 }}
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <!-- Age input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form3Example3">Edad</label>
+          {{ form.edad }}
+        </div>
+
+        <!-- Street input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form3Example3">Calle</label>
+          {{ form.calle }}
+        </div>
+
+        <!-- Neighborhood input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form3Example3">Colonia</label>
+          {{ form.colonia }}
+        </div>
+
+        <!-- Postal Code input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form3Example3">Código Postal</label>
+          {{ form.codigo_postal }}
+        </div>
+
+        <!-- State input -->
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form3Example3">Estado</label>
+          {{ form.estado }}
+        </div>
+
+        {% csrf_token %}
+
+     
+    </div>
+
+  </div>
+
+  <div class="row d-flex justify-content-center align-items-center h-100">
+
+    <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+      <div class="text-center text-lg-start mt-4 pt-2">
+        <button type="submit" class="btn btn-primary btn-lg bgcolor-secundario bordecolor-secundario"
+          style="padding-left: 2.5rem; padding-right: 2.5rem;">Registrarse</button>
+      </div>
+    </div>
+  </form>
+  </div>
+
+</div>
 {% block extra_js %}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.js"></script>
 <script>
@@ -91,5 +133,4 @@
   {% endif %}
 </script>
 {% endblock %}
-
 {% endblock %}
