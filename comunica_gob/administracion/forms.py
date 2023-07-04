@@ -36,3 +36,15 @@ class SignupForm(UserCreationForm):
         persona.save()
 
         return user
+
+class ProductoForm(forms.ModelForm):
+    class Meta:
+        model = Producto
+        fields = ["nombre","descripcion","precio","archivos","activo"]
+        widgets = {
+            "nombre":forms.TextInput(attrs={"class":"form-control","placeholder":"Ingresa nombre del producto"}),
+            "descripcion":forms.Textarea(attrs={"class":"form-control","placeholder":"Ingresa la descripción"}),
+            "precio":forms.NumberInput(attrs={"class":"form-control","placeholder":"Ingresa el precio"}),
+            "archivos":forms.FileInput(attrs={"class":"form-control"}),
+            "activo":forms.CheckboxInput(),
+        }

@@ -6,6 +6,19 @@
   <!-- <button type="submit" class="btn btn-primary btn-lg bgcolor-secundario bordecolor-secundario"
   style="padding-left: 2.5rem; padding-right: 2.5rem;">Entrar</button> -->
   <!-- <button type="button" class="btn btn-secondary">Secondary</button> -->
+  <div class="col-12 mt-5">
+    <form action="{% url 'reporte' %}" method="POST" id="producto_form" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+          {{formProductos.nombre.label}}
+          {{formProductos.nombre}}
+        </div>
+          <input type="hidden" id="id_formulario">
+          <button id="boton_guardar" type="button" onclick="guardarDato()" class="btn btn-primary">Guardar</button>
+          <button id="boton_actualizar" type="button" class="btn btn-primary" style="display: none;">Guardar</button>
+    </form>
+</div>
+
 
 </div>
 
