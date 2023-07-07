@@ -32,6 +32,7 @@
     <div class="col-md-6">
       <form action="{% url 'signup' %}" method="post" class="needs-validation">
         <!-- Username input -->
+
         <div class="form-outline mb-4">
           <label class="form-label" for="form3Example3">Usuario</label>
           {{ form.username }}
@@ -49,16 +50,22 @@
         </div>
 
         <!-- Password input -->
-        <div class="form-outline mb-3">
+        <div class="form-outline mb-4">
           <label class="form-label" for="form3Example4">Contraseña</label>
           {{ form.password1 }}
         </div>
 
         <!-- Password input -->
-        <div class="form-outline mb-3">
+        <div class="form-outline mb-4">
           <label class="form-label" for="form3Example4">Confirmar contraseña</label>
           {{ form.password2 }}
         </div>
+
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form3Example4">eMail</label>
+          {{ form.email }}
+        </div>
+
     </div>
 
     <div class="col-md-6">
@@ -80,11 +87,16 @@
           {{ form.colonia }}
         </div>
 
-        <!-- Postal Code input -->
-        <div class="form-outline mb-4">
-          <label class="form-label" for="form3Example3">Código Postal</label>
-          {{ form.codigo_postal }}
+          
+        <div class="form-outline mb-2">
+            <label class="form-label" for="form3Example3">Código Postal</label>
+            {{ form.codigo_postal }}
         </div>
+        <div class="form-outline mb-2">
+            <label class="form-label" for="form3Example3">Numero</label>
+            {{ form.numero }}
+        </div>
+        
 
         <!-- State input -->
         <div class="form-outline mb-4">
@@ -92,21 +104,25 @@
           {{ form.estado }}
         </div>
 
+        <div class="form-outline mb-4">
+          <label class="form-label" for="form3Example3">Ciudad</label>
+          {{ form.ciudad }}
+        </div>
         {% csrf_token %}
 
      
     </div>
+    <div class="row d-flex justify-content-center align-items-center h-100">
 
+      {% comment %} <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1"> {% endcomment %}
+        {% comment %} <div class="text-center text-lg-start mt-4 pt-2"> {% endcomment %}
+          {% comment %} <button type="submit" class="btn btn-primary btn-lg bgcolor-secundario bordecolor-secundario"
+            style="padding-left: 2.5rem; padding-right: 2.5rem;">Registrarse</button> {% endcomment %}
+            <button type="submit" class="btn btn-secondary" style="margin-bottom: 50px;">Registrarse</button>
+        {% comment %} </div> {% endcomment %}
+      {% comment %} </div> {% endcomment %}
   </div>
 
-  <div class="row d-flex justify-content-center align-items-center h-100">
-
-    <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-      <div class="text-center text-lg-start mt-4 pt-2">
-        <button type="submit" class="btn btn-primary btn-lg bgcolor-secundario bordecolor-secundario"
-          style="padding-left: 2.5rem; padding-right: 2.5rem;">Registrarse</button>
-      </div>
-    </div>
   </form>
   </div>
 

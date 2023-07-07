@@ -3,19 +3,39 @@
 <div class="container">
   <h1>{{title}}</h1>
 
-  <!-- <button type="submit" class="btn btn-primary btn-lg bgcolor-secundario bordecolor-secundario"
-  style="padding-left: 2.5rem; padding-right: 2.5rem;">Entrar</button> -->
-  <!-- <button type="button" class="btn btn-secondary">Secondary</button> -->
   <div class="col-12 mt-5">
-    <form action="{% url 'reporte' %}" method="POST" id="producto_form" enctype="multipart/form-data">
+    <form action="{% url 'reporte' %}" method="POST" id="producto_form" class="needs-validation" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="mb-3">
-          {{formProductos.nombre.label}}
-          {{formProductos.nombre}}
+          {{form.estado.label}}
+          {{form.estado}}
+        </div>
+        <div class="mb-3">
+          {{form.ciudad.label}}
+          {{form.ciudad}}
+        </div>
+        <div class="mb-3">
+          {{form.descripcion.label}}
+          {{form.descripcion}}
+        </div>
+        <div class="mb-3">
+          {{form.colonia.label}}
+          {{form.colonia}}
+        </div>
+        <div class="mb-3">
+          {{form.calle.label}}
+          {{form.calle}}
+        </div>
+        <div class="mb-3">
+          {{form.numero.label}}
+          {{form.numero}}
+        </div>
+        <div class="mb-3">
+          {{form.codigo_postal.label}}
+          {{form.codigo_postal}}
         </div>
           <input type="hidden" id="id_formulario">
-          <button id="boton_guardar" type="button" onclick="guardarDato()" class="btn btn-primary">Guardar</button>
-          <button id="boton_actualizar" type="button" class="btn btn-primary" style="display: none;">Guardar</button>
+          <button type="submit" class="btn btn-secondary" style="margin-bottom: 50px;">Guardar</button>
     </form>
 </div>
 
