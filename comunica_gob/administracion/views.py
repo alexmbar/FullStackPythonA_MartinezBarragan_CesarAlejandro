@@ -5,8 +5,8 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, user_passes_test
-from .forms import SignupForm, ReportForm, LoginForm
-from .models import Reportes
+from .forms import SignupForm, ReportForm, LoginForm, PersonasForm
+from .models import Reportes, Personas
 
 
 def login_forbidden(user):
@@ -21,86 +21,46 @@ def index(request):
 
 #@login_required
 def home(request):
-    # context ={}
-    # persona = Personas.objects.get(usuario__pk=request.user.pk)
-    # context['persona'] = persona
-    return render(request, 'home.html',
-    #context, 
-        {
-        'title': "Reportes"
-        })
+    context ={}
+    persona = Personas.objects.get(usuario__pk=request.user.pk)
+    context['persona'] = persona
+    context['title'] = "Reportes"
+    return render(request, 'home.html',context)
 
-# @login_required
-# def reporte1(request):
-#     if request.POST["reporte"]:
-#         return render(request, 'reporte.html',{
-#             'title': "Crear Reporte"
-#         })
-#     if request.method == 'GET':
-#         return render(request, 'reporte.html',{
-#             'title':"Entro en else"
-#         })
+def misreportes(request):
+    user = request.user
+    reportes = Reportes.objects.filter(persona__usuario=user)
+    return render(request, 'misreportes.html', {'reportes': reportes})
 
-
-# @login_required
-# def reporte(request):
-#     if request.method == 'POST':
-#         reporte_value = request.POST.get("reporte", None)
-#         if reporte_value == 'reparacion':
-#             return render(request, 'reporte.html', {
-#                 'title': "Crear reporte de reparacion de calles y aceras" ,
-#                 "form": ReportForm(),         
-#             })
-#         elif reporte_value == 'recoleccion':
-#             return render(request, 'reporte.html', {
-#                 'title': "Crear reporte de recolección de basura y residuos" ,
-#                 "form": ReportForm(),         
-#             })
-#         elif reporte_value == 'mantenimiento':
-#             return render(request, 'reporte.html', {
-#                 'title': "Crear reporte de mantenimiento de parques y alumbrado público" ,
-#                 "form": ReportForm(),         
-#             })
-#         elif reporte_value == 'gestion':
-#             return render(request, 'reporte.html', {
-#                 'title': "Crear reporte de gestión de emergencias a desastres naturales" ,
-#                 "form": ReportForm(),         
-#             })
-#         else:
-#             return render(request, 'reporte.html', {
-#                 'title': "reporte_value",
-#                 "form": ReportForm(),         
-#             })
-#     elif request.method == 'GET':
-#         return redirect('home')
-
-@login_required
 def reporte(request):
-    title_mapping = {
-        'reparacion': "Crear reporte de reparacion de calles y aceras",
-        'recoleccion': "Crear reporte de recolección de basura y residuos",
-        'mantenimiento': "Crear reporte de mantenimiento de parques y alumbrado público",
-        'gestion': "Crear reporte de gestión de emergencias a desastres naturales",
-    }
-
-    default_title = "Seleccione un tipo de reporte"
-
     if request.method == 'POST':
         reporte_value = request.POST.get("reporte", None)
-        title = title_mapping.get(reporte_value, default_title)
         form = ReportForm(request.POST)
+        if reporte_value == 'reparacion':
+            form_title = "Crear reporte de reparacion de calles y aceras"
+        elif reporte_value == 'recoleccion':
+            form_title = "Crear reporte de recolección de basura y residuos"
+        elif reporte_value == 'mantenimiento':
+            form_title = "Crear reporte de mantenimiento de parques y alumbrado público"
+        elif reporte_value == 'gestion':
+            form_title = "Crear reporte de gestión de emergencias a desastres naturales"
+
         if form.is_valid():
-            reporte = form.save(commit=False)
-            reporte.tipo_reporte = title  # Asignar el valor de "title" al campo "tipo_reporte"
-            reporte.save()
+            report = form.save(commit=False)
+            persona = Personas.objects.get(usuario=request.user)
+            report.persona = persona  
+            #report.tipo_reporte = tipo_reporte
+            report.save()
             return redirect('home')
     else:
-        reporte_value = request.GET.get("reporte", None)
-        title = title_mapping.get(reporte_value, default_title)
+        return redirect('home')
+        form_title = "reporte_value"
         form = ReportForm()
+    
     return render(request, 'reporte.html', {
-        'title': title,
+        'title': form_title,
         'form': form,
+        'tipo_reporte': reporte_value,
     })
 
 def signup(request):
@@ -118,8 +78,8 @@ def signup(request):
             try:
                 if form.is_valid():
                     user = form.save()
-                if user is not None:  # Verificar si user se ha asignado correctamente
-                    login(request, user)
+                # if user is not None:  # Verificar si user se ha asignado correctamente
+                #     login(request, user)
                     return redirect('home')
                 else:
                     messages.warning(request, 'Usuario ya existe.')
@@ -143,7 +103,6 @@ def signup(request):
                 'messages': messages.get_messages(request),
             })
 
-
 @login_required
 def signout(request):
     logout(request)
@@ -165,3 +124,18 @@ def signin(request):
 
         login(request, user)
         return redirect('home')
+
+@login_required
+def verperfil(request):
+    usuario = request.user
+    persona = Personas.objects.get(usuario=usuario)
+    
+    if request.method == 'POST':
+        form = PersonasForm(request.POST, instance=persona)
+        if form.is_valid():
+            form.save()
+            return redirect('verperfil')
+    else:
+        form = PersonasForm(instance=persona)
+    
+    return render(request, 'verperfil.html', {'form': form})

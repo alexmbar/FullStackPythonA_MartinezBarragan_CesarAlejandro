@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from .choices import ESTADOS_CHOICES
+from django.utils import timezone
 
 #class Estados(models.Model):
     # id = models.AutoField(primary_key=True)
@@ -53,10 +54,10 @@ class Reportes(models.Model):
         )    
     ciudad = models.CharField(max_length=100, null=True)
     codigo_postal = models.CharField(max_length=10)
-    tipo_reporte =models.CharField(max_length=100)
-    #tipo_reporte = models.ForeignKey(TipoReporte, on_delete=models.CASCADE)
+    tipo_reporte = models.CharField(max_length=100)
     estatus = models.CharField(max_length=1, default='A')
     descripcion = models.CharField(max_length=250, null=True)
+    fecha = models.DateTimeField(auto_now_add=True, verbose_name='Fecha de creación')
 
     def __str__(self):
         return f"Reporte {self.id}"

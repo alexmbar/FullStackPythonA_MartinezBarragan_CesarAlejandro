@@ -9,13 +9,13 @@
       <ul class="navbar-nav ms-auto">
         {% if user.is_authenticated %}
         <li class="nav-item">
-          <a href="{% url 'home' %}" class="nav-link">Reportar</a>
+          <a href="{% url 'reporte' %}" class="nav-link">Reportar</a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'home' %}" class="nav-link">Mis Reportes</a>
+          <a href="{% url 'misreportes' %}" class="nav-link">Mis Reportes</a>
         </li>
         <li class="nav-item">
-          <a href="{% url 'home' %}" class="nav-link">Perfil</a>
+          <a href="{% url 'verperfil' %}" class="nav-link">Perfil</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{% url 'logout' %}">Cérrar sesion</a>

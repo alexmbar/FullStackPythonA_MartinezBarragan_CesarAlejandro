@@ -1,0 +1,44 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="container">
+    <h1>Mis Reportes</h1>
+
+    {% if reportes %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Fecha de Creación</th>
+                <th>Calle</th>
+                <th>Número</th>
+                <th>Colonia</th>
+                <th>Estado</th>
+                <th>Ciudad</th>
+                <th>Código Postal</th>
+                <th>Tipo de Reporte</th>
+                {% comment %} <th>Estatus</th> {% endcomment %}
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reporte in reportes %}
+            <tr>
+                <td>{{ reporte.fecha }}</td>
+                <td>{{ reporte.calle }}</td>
+                <td>{{ reporte.numero }}</td>
+                <td>{{ reporte.colonia }}</td>
+                <td>{{ reporte.estado }}</td>
+                <td>{{ reporte.ciudad }}</td>
+                <td>{{ reporte.codigo_postal }}</td>
+                <td>{{ reporte.tipo_reporte }}</td>
+                {% comment %} <td>{{ reporte.estatus }}</td> {% endcomment %}
+                <td>{{ reporte.descripcion }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No tienes reportes.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

@@ -51,10 +51,11 @@ class ReportForm(forms.ModelForm):
     codigo_postal = forms.IntegerField(label="Código Postal", widget=forms.NumberInput(attrs={"class":"form-control","placeholder":"Ingresa su código postal"}))
     estado = forms.ChoiceField(label="Estado", choices=ESTADOS_CHOICES, widget=forms.Select(attrs={"class":"form-control"}))
     ciudad = forms.CharField(label="Ciudad", widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Ingresa su ciudad"}))
+    tipo_reporte = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
         model = Reportes
-        fields = ['descripcion', 'calle', 'numero','colonia', 'codigo_postal', 'estado','ciudad']
+        fields = ['descripcion', 'calle', 'numero','colonia', 'codigo_postal', 'estado','ciudad','tipo_reporte']
 
     def save(self, commit=True):
         reporte = super().save(commit=False)
@@ -65,4 +66,8 @@ class ReportForm(forms.ModelForm):
 class LoginForm(forms.Form):
     username = forms.CharField(label="Usuario", widget=forms.TextInput(attrs={"class":"form-control","placeholder":"Ingresa su usuario"}))   
     password = forms.CharField(label="Contraseña", widget=forms.PasswordInput(attrs={"class":"form-control","placeholder":"Ingresa su contraseña"})) 
-     
+    
+class PersonasForm(forms.ModelForm):
+    class Meta:
+        model = Personas
+        fields = ['nombre', 'apellidos', 'edad', 'calle', 'numero', 'colonia', 'ciudad', 'email', 'codigo_postal', 'estado']

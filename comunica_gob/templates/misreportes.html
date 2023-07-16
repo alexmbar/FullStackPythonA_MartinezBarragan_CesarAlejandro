@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <h1>Mis Reportes</h1>
+
+    {% if reportes %}
+    <div id="reportes-table" style="max-height: 450px; overflow-y: auto;"></div>
+    <script>
+        var tableData = [
+            {% for reporte in reportes %}
+                {
+                    "Fecha de Creación": "{{ reporte.fecha }}",
+                    "Calle": "{{ reporte.calle }}",
+                    "Número": "{{ reporte.numero }}",
+                    "Colonia": "{{ reporte.colonia }}",
+                    "Estado": "{{ reporte.estado }}",
+                    "Ciudad": "{{ reporte.ciudad }}",
+                    "Código Postal": "{{ reporte.codigo_postal }}",
+                    "Tipo de Reporte": "{{ reporte.tipo_reporte }}",
+                    "Estatus": "{{ reporte.estatus }}",
+                    "Descripción": "{{ reporte.descripcion }}"
+                },
+            {% endfor %}
+        ];
+
+        var table = new Tabulator("#reportes-table", {
+            data: tableData,
+            columns: [
+                { title: "Fecha de Creación", field: "Fecha de Creación" },
+                { title: "Calle", field: "Calle" },
+                { title: "Número", field: "Número" },
+                { title: "Colonia", field: "Colonia" },
+                { title: "Estado", field: "Estado" },
+                { title: "Ciudad", field: "Ciudad" },
+                { title: "Código Postal", field: "Código Postal" },
+                { title: "Tipo de Reporte", field: "Tipo de Reporte" },
+                { title: "Estatus", field: "Estatus" },
+                { title: "Descripción", field: "Descripción" },
+            ],
+        });
+    </script>
+    {% else %}
+    <p>No tienes reportes.</p>
+    {% endif %}
+</div>
+
+{% endblock %}

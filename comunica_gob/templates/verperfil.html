@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="row justify-content-center mt-5">
+      <div class="col-lg-6 col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <h1 class="card-title">Mi Perfil</h1>
+            <form method="POST">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col">
+                  {{ form.nombre.label_tag }}
+                  {{ form.nombre }}
+                </div>
+                <div class="col">
+                  {{ form.apellidos.label_tag }}
+                  {{ form.apellidos }}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  {{ form.edad.label_tag }}
+                  {{ form.edad }}
+                </div>
+                <div class="col">
+                  {{ form.email.label_tag }}
+                  {{ form.email }}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  {{ form.calle.label_tag }}
+                  {{ form.calle }}
+                </div>
+                <div class="col">
+                  {{ form.numero.label_tag }}
+                  {{ form.numero }}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  {{ form.colonia.label_tag }}
+                  {{ form.colonia }}
+                </div>
+                <div class="col">
+                  {{ form.ciudad.label_tag }}
+                  {{ form.ciudad }}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  {{ form.codigo_postal.label_tag }}
+                  {{ form.codigo_postal }}
+                </div>
+                <div class="col">
+                  {{ form.estado.label_tag }}
+                  {{ form.estado }}
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
